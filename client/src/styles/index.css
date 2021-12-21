@@ -1,0 +1,49 @@
+html{
+  background-color: #cce;
+  border: 0.7rem solid #8833ff;
+  height: 100vh;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 1rem 2.5rem;
+}
+
+.subtle{
+  font-size: normal;
+}
+
+.stat-bar {
+  background-color: #8855dd;
+  width: 100%;
+  height: 5.5rem;
+  border-radius:  0.5rem;
+}
+
+li{
+  margin: 0.26rem 0;
+}
+
+#stat-list{
+  color: rgb(228, 213, 248);
+  display: flex;
+  flex-direction: column;
+  align-content: right;
+}
+
+table{
+  background-color: white;
+  margin: 2rem 0;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 1px solid black;
+}
+
+@media screen and (max-width:560px) {
+  html{
+    font-size: 80%;
+  }
+}
