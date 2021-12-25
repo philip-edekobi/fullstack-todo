@@ -1,11 +1,13 @@
+import Home from './Home'; 
+import DashBoard from '../user/DashBoard';
+import LogIn from '../user/LogIn';
+import SignUp from '../user/SignUp';
+
 import {
     BrowserRouter as Router,
     Routes,
     Route
 } from 'react-router-dom';
-
-import Home from './Home'; 
-import DashBoard from '../user/DashBoard';
 
 export default function App(){
     return (
@@ -14,6 +16,8 @@ export default function App(){
                 <Routes>
                     <Route path="/todos" element={<DashBoard />} />
                     <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<LogIn />} />
+                    <Route path="/signup" element={<SignUp />} />
                 </Routes>
             </div>
         </Router>

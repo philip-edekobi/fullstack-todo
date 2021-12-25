@@ -1,7 +1,7 @@
 html{
   background-color: #cce;
   border: 0.7rem solid #8833ff;
-  height: 100vh;
+  height: 100%;
 }
 
 body {
@@ -10,6 +10,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding: 1rem 2.5rem;
+}
+
+.styled-header {
+  color: #436;
 }
 
 .subtle{
@@ -21,10 +25,29 @@ body {
   width: 100%;
   height: 5.5rem;
   border-radius:  0.5rem;
+  margin-bottom: 2rem;
+}
+
+.container{
+  margin: 10%;
+  padding: 1rem 15rem;
+}
+
+.page{
+  display: flex;
+  flex-direction: column;
+  background-color: #dee;
+  height: 70vh;
+  align-items: center;
+  justify-content: space-around;
 }
 
 li{
   margin: 0.26rem 0;
+}
+
+TableCell{
+  font-size: 2rem;
 }
 
 #stat-list{
@@ -34,16 +57,50 @@ li{
   align-content: right;
 }
 
-table{
-  background-color: white;
-  margin: 2rem 0;
-  border-collapse: collapse;
-  border-spacing: 0;
-  border: 1px solid black;
+#done{
+  color: rgb(16, 143, 16);
+}
+
+#form{
+  margin-bottom: 2rem;
+  display: flex;
+}
+
+.distance{
+  margin: 1rem 2rem ;
+}
+
+#del{
+  color: rgba(199, 13, 0, 0.836);
+}
+
+#del:hover{
+  cursor: pointer;
+  background-color: #eee;
+}
+
+#row:hover{
+  background-color: #bbc;
+  cursor: pointer;
+}
+
+footer{
+  margin: 4rem 0.5rem 0 3rem;
+  font-size: 0.7;
+  font-weight: bold;
 }
 
 @media screen and (max-width:560px) {
   html{
     font-size: 80%;
+  }
+  #form{
+    justify-content: stretch;
+  }
+  .distance{
+    justify-content: stretch;
+  }
+  .page{
+    height: 40vh;
   }
 }

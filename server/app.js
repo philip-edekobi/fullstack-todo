@@ -7,14 +7,16 @@ const mongoose = require('mongoose');
 
 app.use(express.json());
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "*",
     credentials: true,
 }));
 
-app.use("/todos", todoRoutes);
+app.use("/api/todos", todoRoutes);
 
 require("dotenv").config();
 
-mongoose.connect(process.env.MONGO_URI)
-    .then(res => app.listen(5000, () => console.log("server is running on http://localhost:5000/todos")))
+const PORT = process.env.PORT || 5000;
+
+mongoose.connect(process.env.MONGO_URL)
+    .then(res => app.listen(PORT, () => console.log(`server is running on http://localhost:${PORT}`)))
     .catch(err => console.log(err));
