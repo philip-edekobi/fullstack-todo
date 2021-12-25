@@ -1,8 +1,10 @@
 const router = require("express").Router();
+const authMiddleware = require("./middleware/authMiddleware");
 
 const {
     login,
     signup,
+    logout,
     getTodos,
     addTodo,
     updateTodo,
@@ -10,18 +12,20 @@ const {
     deleteAllTodos
 } = require("./controller.js");
 
-router.get('/', getTodos);
+router.get('/', authMiddleware, getTodos);
 
-router.post('/', addTodo);
+router.post('/', authMiddleware, addTodo);
 
-router.patch('/:id', updateTodo);
+router.patch('/:id', authMiddleware, updateTodo);
 
-router.delete('/all', deleteAllTodos);
+router.delete('/all', authMiddleware, deleteAllTodos);
 
-router.delete('/:id', deleteTodo);
+router.delete('/:id', authMiddleware, deleteTodo);
 
 router.post('/login', login);
 
 router.post('/signup', signup);
+
+router.post("/logout", logout)
 
 module.exports = router;

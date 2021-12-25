@@ -2,21 +2,69 @@ const User = require("./models/User.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const getTodos = (req, res) => {
+const getTodos = async (req, res) => {
+    try {
+        const { email } = req;
+        const user = await User.findOne({ email });
+        const { todos } = user;
+        return res.status(200).json({ todos: todos });
+    } catch (error) {
+        return res.status(500).json({ error: "Some internal server error occured" })
+    }
 }
 
 const addTodo = async (req, res) => {
-    const { completed, id, action } = req.body;
-
+    try {
+        const { id, action } = req.body; const { email } = req;  
+        const todo = await User.createTodo(id, action) 
+        const user = await User.findOne({ email });
+        try{
+            user.addTodo(todo);
+            await user.save();
+            return res.status(200).json({ todos: user.todos });    
+        } catch(e){
+            return res.status(409).json({ error: "This todo already exists" });
+        }
+    } catch (error) {
+        return res.status(500).json({ error: "Some internal server error occured" })
+    }
 }
 
 const updateTodo = (req, res) => {
 }
 
-const deleteTodo = (req, res) => {
+const deleteTodo = async (req, res) => {
+    try {
+        const { email } = req; const { id } = req.params;
+        const user = await User.findOne({ email });
+        try {
+            user.deleteTodo(id);  
+            await user.save();
+            return res.status(200).json({ todos: user.todos }); 
+        } catch (error) {
+            return error
+        }
+    } catch (error) {
+        return res.status(500).json({ error: "Some internal server error"})
+    }
 }
 
-const deleteAllTodos = (req, res) => {
+const deleteAllTodos = async (req, res) => {
+    try {
+        const { email } = req;
+        const user = await User.findOne({ email });
+        try{
+            user.clearTodos();
+            await user.save();
+            return res.status(200).json({todos: user.todos });
+        } catch (error){
+            console.error(error);
+            return error;
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({error: "Some internal server error occured"});
+    }
 }
 
 const login = async (req, res) => {
@@ -82,9 +130,16 @@ const signup = async (req, res) => {
     }
 }
 
+const logout = async (req, res) => {
+    return res
+            .clearCookie("access_token")
+            .status(200).json({message: "Logged out sucessfully"})
+}
+
 module.exports = {
     login,
     signup,
+    logout,
     getTodos,
     addTodo,
     updateTodo,
