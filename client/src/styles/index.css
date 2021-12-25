@@ -1,15 +1,31 @@
+*,
+*:before,
+*:after{
+  box-sizing: border-box;
+}
+
 html{
-  background-color: #cce;
-  border: 0.7rem solid #8833ff;
-  height: 100%;
+  background-color: #777;
+  display: flex;
 }
 
 body {
+  background-color: #cce;
+  border: 0.7rem solid #8833ff;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding: 1rem 2.5rem;
+  height: 100%;
+}
+
+a{
+  color: #66e;
+}
+
+a:hover{
+  color: #78f;
 }
 
 .styled-header {
@@ -22,15 +38,17 @@ body {
 
 .stat-bar {
   background-color: #8855dd;
-  width: 100%;
-  height: 5.5rem;
   border-radius:  0.5rem;
   margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .container{
-  margin: 10%;
-  padding: 1rem 15rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .page{
@@ -40,6 +58,16 @@ body {
   height: 70vh;
   align-items: center;
   justify-content: space-around;
+}
+
+.box{
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+.auth-form{
+  margin-bottom: 6rem;
 }
 
 li{
@@ -85,14 +113,19 @@ TableCell{
 }
 
 footer{
-  margin: 4rem 0.5rem 0 3rem;
+  margin: 4rem 0.5rem 0 0;
   font-size: 0.7;
   font-weight: bold;
 }
 
-@media screen and (max-width:560px) {
+@media screen and (max-width:560px) and (max-height: 960px) {
   html{
-    font-size: 80%;
+    font-size: 1rem;
+  }
+  body{
+    font-size: 1rem;
+    width: 100%;
+    margin: 0;
   }
   #form{
     justify-content: stretch;
@@ -102,5 +135,37 @@ footer{
   }
   .page{
     height: 40vh;
+  }
+  .container{
+    display: block;
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .container{
+    margin: 0 25%;
+  }
+  body{
+    width: 100%;
+  }
+  html{
+    padding: 0 13rem 0 13rem;
+  }
+}
+@media screen and (max-width: 860px) and (min-width: 560px) {
+  .container{
+    margin: 0 20% 0 20%;
+  }
+  body{
+    width: 100%;
+    height: 100%;
+  }
+  html{
+    font-size: 1rem;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    height: 100%;
   }
 }

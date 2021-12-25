@@ -28,7 +28,7 @@ const todos = [
 export default function DashBoard(){
 
     return (
-        <div>
+        <div className="box">
             <Typography variant="h2" class="header"> Hey there, John</Typography>
             <div>
                 <span class="stats">

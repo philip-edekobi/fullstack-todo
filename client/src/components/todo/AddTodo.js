@@ -14,8 +14,8 @@ export default function AddTodo(todo) {
     }
 
     return (
-        <Fragment >
-            <TextField sx={{width: "20rem"}} value={text} onChange={change} />
+        <Fragment className="hug" >
+            <TextField style={{width: "20rem"}} value={text} onChange={change} />
             <span class="distance" >
                 <Button variant="contained" onClick={add}
                     sx={{backgroundColor: "#3aa", color: "#ddd",}} 
