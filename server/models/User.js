@@ -22,7 +22,11 @@ UserSchema.methods.addTodo = function(newTodo){
 }
 
 UserSchema.methods.deleteTodo= function(id){
-    this.todos = this.todos.filter(todo => todo.id !== id)
+    newList = this.todos.filter(todo => todo.id !== id);
+    if(newList.length === this.todos.length){
+        throw Error("Todo not found");
+    }
+    this.todos = newList;
 }
 
 UserSchema.methods.clearTodos = function(){

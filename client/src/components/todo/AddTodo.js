@@ -1,5 +1,5 @@
 import { Button, TextField, CircularProgress } from '@mui/material';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 
 export default function AddTodo(todo) {
     const [text, setText] = useState("");
@@ -14,7 +14,7 @@ export default function AddTodo(todo) {
     }
 
     return (
-        <Fragment className="hug" >
+        <>
             <TextField style={{width: "20rem"}} value={text} onChange={change} />
             <span class="distance" >
                 <Button variant="contained" onClick={add}
@@ -23,6 +23,6 @@ export default function AddTodo(todo) {
                     {addLoading ? <CircularProgress size="1rem" /> : "Add"}
                 </Button>
             </span>
-        </Fragment>
+        </>
     );
 }

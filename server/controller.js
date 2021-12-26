@@ -30,7 +30,23 @@ const addTodo = async (req, res) => {
     }
 }
 
-const updateTodo = (req, res) => {
+const updateTodo = async (req, res) => {
+    try {
+        const { email } = req; const { id } = req.params;
+        const { completed } = req.body;
+        const user = await User.findOne({ email });
+        try {
+            let index = await user.todos.findIndex(todo => todo.id === id);
+            let todo = user.todos[index];
+            user.todos[index] = {...todo, completed: completed}
+            await user.save();
+            return res.status(200).json({ todos: user.todos});
+        } catch (error) {
+            res.status(404).json({ error: error.message });
+        }
+    } catch (error) {
+        res.status(500).json({ error: "Some internal server error occured"});
+    }
 }
 
 const deleteTodo = async (req, res) => {
@@ -42,7 +58,7 @@ const deleteTodo = async (req, res) => {
             await user.save();
             return res.status(200).json({ todos: user.todos }); 
         } catch (error) {
-            return error
+            res.status(404).json({ error: error.message });
         }
     } catch (error) {
         return res.status(500).json({ error: "Some internal server error"})
@@ -78,13 +94,13 @@ const login = async (req, res) => {
                 { name: user.name, email: email },
                 process.env.TOKEN_KEY,
                 {
-                    expiresIn: "2h",
+                    expiresIn: "6h",
                 }
             );
             return res.cookie("access_token", token, {
                 httpOnly: true,
                 secure: process.env.Node_ENV === "production"
-            }).status(200).json({ user: {name: user.name, email} });
+            }).status(200).json({ user: {name: user.name} });
         }
         //if user not found
         return res.status(404).json({ error: "User does not exist, try signing up" });
@@ -117,14 +133,14 @@ const signup = async (req, res) => {
             { name: name, email: email },
             process.env.TOKEN_KEY,
             {
-                expiresIn: "2h",
+                expiresIn: "6h",
             }
         );
         await user.save(); //save the user
         res.cookie("access_token", token, {
             httpOnly: true,
             secure: process.env.Node_ENV === "production"
-        }).status(201).json({ user: {name, email} });
+        }).status(201).json({ user: {name} });
     } catch (err){
         res.status(500).json({ error: "Some internal error occured. Try again " });
     }
