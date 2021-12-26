@@ -24,7 +24,6 @@ export default function Home(){
                         Log In and Continue
                     </Button>
                 </section>
-                
             </main>
             <footer>
                 Poposki &copy; 2021

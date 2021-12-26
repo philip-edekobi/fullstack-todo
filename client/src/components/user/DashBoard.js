@@ -1,6 +1,10 @@
-import { Typography } from "@mui/material";
+import { Typography, Button, CircularProgress } from "@mui/material";
 import TodoList from '../todo/Todolist';
 import AddTodo from '../todo/AddTodo';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useState, useEffect } from "react";
 
 const todos = [
     {
@@ -26,9 +30,22 @@ const todos = [
 ];
 
 export default function DashBoard(){
+    const [loggingOut, setLoggingOut] = useState(false);
+
+    const navigate = useNavigate();
+
+    async function logout(){
+        await axios.post('/api/logout');
+        setLoggingOut(true);
+        await setTimeout(() => navigate('/login'), 1500)
+    }
 
     return (
         <div className="box">
+        <Button id="lo" variant="outlined" 
+        onClick={logout}>
+            { loggingOut ? <CircularProgress style={{color: "#fff"}} size="1rem" /> : <>{<LogoutIcon />} &nbsp;Log Out</> }
+        </Button>
             <Typography variant="h2" class="header"> Hey there, John</Typography>
             <div>
                 <span class="stats">
