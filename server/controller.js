@@ -7,7 +7,7 @@ const getTodos = async (req, res) => {
         const { email } = req;
         const user = await User.findOne({ email });
         const { todos } = user;
-        return res.status(200).json({ todos: todos });
+        return res.status(200).json({ user: user.name, todos: todos });
     } catch (error) {
         return res.status(500).json({ error: "Some internal server error occured" })
     }

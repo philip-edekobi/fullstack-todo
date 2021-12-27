@@ -12,6 +12,7 @@ export default function DashBoard(){
     const [loggingOut, setLoggingOut] = useState(false);
     const [init, setInit] = useState(true);
     const [todos, setTodos] = useRecoilState(todoListState);
+    const [user, setUser] = useState("");
 
     const navigate = useNavigate();
 
@@ -25,6 +26,7 @@ export default function DashBoard(){
         const response = await axios.get("/api/");
         if(response.status === 200){
             setTodos(response.data.todos);
+            setUser(response.data.user);
         } else {
             alert("There was an error on the server");
         }
@@ -32,10 +34,10 @@ export default function DashBoard(){
 
     async function permit(){
         const yes = await axios.get("/api/permit");
-        if (yes.status === 200){
-            return true;
+        if (yes.status === 403){
+            return false;
         } 
-        return false;
+        return true;
     }
 
     async function clearTodos(){
@@ -62,7 +64,7 @@ export default function DashBoard(){
     onClick={logout}>
         { loggingOut ? <CircularProgress style={{color: "#fff"}} size="1rem" /> : <>{<LogoutIcon />} &nbsp;Log Out</> }
     </Button>
-        <Typography variant="h2" class="header"> Hey there, John</Typography>
+        <Typography variant="h2" class="header"> Hey there, {user}</Typography>
         <div>
             <span class="stats">
                 <Typography variant="body2" class="subtle">Your stats</Typography>
