@@ -113,16 +113,16 @@ TableCell{
   color: red;
 }
 
-#del{
-  color: rgba(199, 13, 0, 0.836);
+.del{
+  color: rgba(139, 19, 11, 0.836);
 }
 
-#del:hover{
+.del:hover{
   cursor: pointer;
-  background-color: #eee;
+  background-color: rgb(238, 187, 187);
 }
 
-#row:hover{
+.row:hover{
   background-color: #bbc;
   cursor: pointer;
 }

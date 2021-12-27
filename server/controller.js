@@ -36,7 +36,7 @@ const updateTodo = async (req, res) => {
         const { completed } = req.body;
         const user = await User.findOne({ email });
         try {
-            let index = await user.todos.findIndex(todo => todo.id === id);
+            let index = await user.todos.findIndex(tod => tod.id === id);
             let todo = user.todos[index];
             user.todos[index] = {...todo, completed: completed}
             await user.save();
@@ -94,7 +94,7 @@ const login = async (req, res) => {
                 { name: user.name, email: email },
                 process.env.TOKEN_KEY,
                 {
-                    expiresIn: "6h",
+                    expiresIn: "2d",
                 }
             );
             return res.cookie("access_token", token, {
@@ -133,7 +133,7 @@ const signup = async (req, res) => {
             { name: name, email: email },
             process.env.TOKEN_KEY,
             {
-                expiresIn: "6h",
+                expiresIn: "2d",
             }
         );
         await user.save(); //save the user

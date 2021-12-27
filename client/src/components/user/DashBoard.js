@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Typography, Button, CircularProgress } from "@mui/material";
 import TodoList from '../todo/Todolist';
 import AddTodo from '../todo/AddTodo';
@@ -5,32 +6,11 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useState, useEffect } from "react";
-
-const todos = [
-    {
-        id: 1,
-        action: "Go to church",
-        completed: true
-    },
-    {
-        id: 2,
-        action: "Eat food",
-        completed: false
-    },
-    {
-        id: 3,
-        action: "pray",
-        completed: true
-    },
-    {
-        id: 4,  
-        action: "Watch a movie",
-        completed: false
-    }
-];
+import { atom, useRecoilState } from 'recoil';
 
 export default function DashBoard(){
     const [loggingOut, setLoggingOut] = useState(false);
+    const [todos, setTodos] = useRecoilState(todoListState);
 
     const navigate = useNavigate();
 
@@ -39,6 +19,15 @@ export default function DashBoard(){
         setLoggingOut(true);
         await setTimeout(() => navigate('/login'), 1500)
     }
+
+    async function getTodos(){
+        const response = await axios.get("/api/");
+        setTodos(response.data.todos);
+    }
+
+    useEffect( async () => {
+        getTodos();
+    }, []);
 
     return (
         <div className="box">
@@ -59,10 +48,10 @@ export default function DashBoard(){
             </div>
 
             <div id="form">
-                <AddTodo />
+                <AddTodo setTodos={setTodos} />
             </div>
 
-            <TodoList todos={todos} />
+            <TodoList setTodos={setTodos} todos={todos} />
 
             <footer>
                 Poposki &copy; 2021
@@ -83,3 +72,5 @@ function useTaskInfo(todoList){
 
     return res;
 }
+
+const todoListState = atom({ key: 'todoListState',  default: [] });

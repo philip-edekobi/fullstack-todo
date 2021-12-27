@@ -10,11 +10,11 @@ import { Typography } from "@mui/material";
 import TablePagination from '@mui/material/TablePagination';
 import { useState } from 'react';
 
-export default function Todolist({ todos }){
+export default function Todolist({ todos, setTodos }){
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
-    let body = todos.map(todo => <Todo todo={todo} /> );
+    let body = todos.map(todo => <Todo setTodos={setTodos} todo={todo} /> );
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
