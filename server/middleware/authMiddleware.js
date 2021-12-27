@@ -13,7 +13,7 @@ const authMiddleware = async (req, res, next) => {
         req.email = email;
         next();
     } catch (error) {
-        res.status(500).json({ error: "Some internal server error occured. Try again" })
+        return res.status(500).json({ error: "Some internal server error occured. Try again" })
     }
 }
 

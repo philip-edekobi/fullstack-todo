@@ -14,7 +14,7 @@ const {
 
 router.get('/', authMiddleware, getTodos);
 
-router.get('/permit', authMiddleware, (req, res) => res.status(200));
+router.get('/permit', authMiddleware, (req, res) => res.status(200).json({ msg: "ok" }));
 
 router.post('/', authMiddleware, addTodo);
 
