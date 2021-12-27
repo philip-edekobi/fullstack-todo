@@ -1,5 +1,7 @@
 import { Button, TextField, CircularProgress } from '@mui/material';
 import { useState } from 'react';
+import { nanoid } from 'nanoid';
+import axios from 'axios';
 
 export default function AddTodo(todo) {
     const [text, setText] = useState("");
@@ -9,8 +11,13 @@ export default function AddTodo(todo) {
         setText(e.target.value);
     }
 
-    function add(){
-        return null;
+    async function add(e){
+        e.preventDefault();
+        setAddLoading(true);
+        const response = await axios.post('/api/', {
+            action: text,
+            id: nanoid()
+        });
     }
 
     return (
