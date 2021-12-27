@@ -14,7 +14,7 @@ export default function Todolist({ todos, setTodos }){
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
-    let body = todos.map(todo => <Todo setTodos={setTodos} todo={todo} /> );
+    let body = todos.length === 0 ? "No todos yet" : todos.map(todo => <Todo setTodos={setTodos} todo={todo} /> );
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);

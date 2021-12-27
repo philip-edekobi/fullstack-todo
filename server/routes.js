@@ -14,6 +14,8 @@ const {
 
 router.get('/', authMiddleware, getTodos);
 
+router.get('/permit', authMiddleware, (req, res) => res.status(200));
+
 router.post('/', authMiddleware, addTodo);
 
 router.patch('/:id', authMiddleware, updateTodo);

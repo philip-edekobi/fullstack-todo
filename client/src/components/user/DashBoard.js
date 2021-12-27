@@ -10,6 +10,7 @@ import { atom, useRecoilState } from 'recoil';
 
 export default function DashBoard(){
     const [loggingOut, setLoggingOut] = useState(false);
+    const [init, setInit] = useState(true);
     const [todos, setTodos] = useRecoilState(todoListState);
 
     const navigate = useNavigate();
@@ -22,41 +23,74 @@ export default function DashBoard(){
 
     async function getTodos(){
         const response = await axios.get("/api/");
-        setTodos(response.data.todos);
+        if(response.status === 200){
+            setTodos(response.data.todos);
+        } else {
+            alert("There was an error on the server");
+        }
+    }
+
+    async function permit(){
+        const yes = await axios.get("/api/permit");
+        if (yes.status === 200){
+            return true;
+        } 
+        return false;
+    }
+
+    async function clearTodos(){
+        let response = await axios.delete("/api/all");
+        if (response.status === 200){
+           setTodos(response.data.todos);
+        } else{
+            alert("An error occured on the server");
+        }
     }
 
     useEffect( async () => {
-        getTodos();
+        let connect = permit();
+        if (connect){
+            setInit(false);
+            getTodos();
+        } else{
+            navigate('/login');
+        }
     }, []);
 
-    return (
-        <div className="box">
-        <Button id="lo" variant="outlined" 
-        onClick={logout}>
-            { loggingOut ? <CircularProgress style={{color: "#fff"}} size="1rem" /> : <>{<LogoutIcon />} &nbsp;Log Out</> }
-        </Button>
-            <Typography variant="h2" class="header"> Hey there, John</Typography>
-            <div>
-                <span class="stats">
-                    <Typography variant="body2" class="subtle">Your stats</Typography>
-                </span>
-            </div>
-            <div class="stat-bar">
-                <ul id="stat-list">
-                    {useTaskInfo(todos).map(res => <li>{res}</li>)}
-                </ul>
-            </div>
-
-            <div id="form">
-                <AddTodo setTodos={setTodos} />
-            </div>
-
-            <TodoList setTodos={setTodos} todos={todos} />
-
-            <footer>
-                Poposki &copy; 2021
-            </footer>
+    let component = <div className="box">
+    <Button id="lo" variant="outlined" 
+    onClick={logout}>
+        { loggingOut ? <CircularProgress style={{color: "#fff"}} size="1rem" /> : <>{<LogoutIcon />} &nbsp;Log Out</> }
+    </Button>
+        <Typography variant="h2" class="header"> Hey there, John</Typography>
+        <div>
+            <span class="stats">
+                <Typography variant="body2" class="subtle">Your stats</Typography>
+            </span>
         </div>
+        <div class="stat-bar">
+            <ul id="stat-list">
+                {useTaskInfo(todos).map(res => <li>{res}</li>)}
+            </ul>
+        </div>
+
+        <div id="form">
+            <AddTodo setTodos={setTodos} />
+
+            <Button onClick={clearTodos} >Clear all</Button>
+        </div>
+
+        <TodoList setTodos={setTodos} todos={todos} />
+
+        <footer>
+            Poposki &copy; 2021
+        </footer>
+    </div>
+
+    return (
+        init ?
+         <p class="rascal">verifying... <br /> <CircularProgress /></p>
+          : component
     );
 }
 
