@@ -74,11 +74,9 @@ const deleteAllTodos = async (req, res) => {
             await user.save();
             return res.status(200).json({todos: user.todos });
         } catch (error){
-            console.error(error);
             return error;
         }
     } catch (error) {
-        console.log(error);
         return res.status(500).json({error: "Some internal server error occured"});
     }
 }
@@ -105,7 +103,6 @@ const login = async (req, res) => {
         //if user not found
         return res.status(404).json({ error: "User does not exist, try signing up" });
     } catch (error) {
-        console.log(error);
         res
             .status(500)
             .json({ error: "Some internal error occurred, could not log in. Try again" });

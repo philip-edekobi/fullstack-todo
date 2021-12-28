@@ -50,8 +50,8 @@ export default function DashBoard(){
     }
 
     useEffect( async () => {
-        let connect = permit();
-        if (connect === true){
+        let connect = await permit();
+        if (connect){
             setInit(false);
             getTodos();
         } else{

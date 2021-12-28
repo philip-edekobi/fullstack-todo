@@ -17,7 +17,7 @@ export default function AddTodo(props) {
         setAddLoading(true); setText("");
         const response = await axios.post('/api/', {
             action: text,
-            id: nanoid()
+            id: nanoid(6)
         });
         switch(response.status){
             case 200: {
